@@ -5,6 +5,8 @@ namespace Lab2_DATABASE_FIRST
         public Form1()
         {
             InitializeComponent();
+            Lab3Context db = new Lab3Context();
+            dataGridView1.DataSource = db.Users.ToList();
         }
     }
 }
