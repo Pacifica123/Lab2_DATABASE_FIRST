@@ -91,9 +91,11 @@ namespace Lab2_DATABASE_FIRST
             User user = new User();
             user.Login = formUsers.login;
             user.Datereg = formUsers.dateReg;
+           // var playlistList = db.Playlists.Where(p => p.Id)
+            //user.Playlists
             // Сохраняем и обновляем
-            db.SaveChanges();
-            ShowUsers();
+            db.Users.Add(user);
+            db.SaveChanges(); ShowUsers();
         }
         private void AddSong()
         {
@@ -101,9 +103,9 @@ namespace Lab2_DATABASE_FIRST
             if(formSongs.ShowDialog() == DialogResult.Cancel) { return; }
             Song song = new Song();
             song.Title = formSongs.title;
-          //  song.Playlistsongs = ???
-            db.SaveChanges();
-            ShowSongs();
+            //  song.Playlistsongs = ???
+            db.Songs.Add(song);
+            db.SaveChanges(); ShowSongs();
         }
         private void AddPlaylist()
         {
@@ -112,17 +114,24 @@ namespace Lab2_DATABASE_FIRST
             Playlist playlist = new Playlist();
             playlist.Titleplaylist = formPlaylists.title;
             playlist.Userid = formPlaylists.userId;
-            // TODO: подумать как решить эту проблему:
+            // TODO: подумать как решить эту проблему c NULL:
             playlist.User = db.Users.FirstOrDefault(u => u.Id == playlist.Userid);
-            db.SaveChanges();
-            ShowPlaylists();
+            playlist.User.Playlists.Add(playlist);
+            db.Playlists.Add(playlist);
+            db.SaveChanges(); ShowPlaylists();
         }
         private void AddPlaylistSongs()
         {
             FormPlaylistSongLink formLink = new FormPlaylistSongLink();
             if (formLink.ShowDialog() == DialogResult.Cancel) { return; }
-
-
+            Playlistsong link = new Playlistsong();
+            link.Playlistid = formLink.id_playlist;
+            link.Songid = formLink.id_song;
+            link.Playlist = db.Playlists.FirstOrDefault(p => p.Id == link.Playlistid);
+            link.Song = db.Songs.FirstOrDefault(s => s.Id == link.Songid);
+            link.Song.Playlistsongs.Add(link);
+            db.Playlistsongs.Add(link);
+            db.SaveChanges(); ShowPlaylistSongs();
         }
         #endregion
         private void ADD_BUT_Click(object sender, EventArgs e)

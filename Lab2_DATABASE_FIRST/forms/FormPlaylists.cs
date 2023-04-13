@@ -17,7 +17,7 @@ namespace Lab2_DATABASE_FIRST.forms
         public FormPlaylists()
         {
             InitializeComponent();
-            UserId_CMBX.DataSource = new Lab3Context().Playlists.ToList();
+            UserId_CMBX.DataSource = new Lab3Context().Users.ToList();
             UserId_CMBX.ValueMember = "Id";
             UserId_CMBX.DisplayMember = "Login";
         }

@@ -22,7 +22,7 @@ namespace Lab2_DATABASE_FIRST.forms
             SongId_CMBX.ValueMember = "Id";
             SongId_CMBX.DisplayMember = "Title";
 
-            PlaylistId_CMBX.DataSource = new Lab3Context().Songs.ToList();
+            PlaylistId_CMBX.DataSource = new Lab3Context().Playlists.ToList();
             PlaylistId_CMBX.ValueMember = "Id";
             PlaylistId_CMBX.DisplayMember = "Titleplaylist";
         }
