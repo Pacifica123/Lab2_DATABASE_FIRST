@@ -6,7 +6,7 @@ namespace Lab2_DATABASE_FIRST;
 public partial class Playlist
 {
     public int Id { get; set; }
-
+        
     public string Titleplaylist { get; set; } = null!;
 
     public int Userid { get; set; }
