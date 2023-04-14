@@ -118,6 +118,7 @@
             this.EDIT_BUT.TabIndex = 3;
             this.EDIT_BUT.Text = "ИЗМЕНИТЬ";
             this.EDIT_BUT.UseVisualStyleBackColor = false;
+            this.EDIT_BUT.Click += new System.EventHandler(this.EDIT_BUT_Click);
             // 
             // DEL_BUT
             // 

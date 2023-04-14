@@ -35,5 +35,11 @@ namespace Lab2_DATABASE_FIRST.forms
             this.DialogResult = DialogResult.Cancel;
             return;
         }
+
+        public void LoadEdit(string oldtitle, int id_user)
+        {
+            txtLogin.Text = oldtitle;
+            UserId_CMBX.SelectedValue = id_user;
+        }
     }
 }

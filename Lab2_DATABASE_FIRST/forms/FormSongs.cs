@@ -29,5 +29,10 @@ namespace Lab2_DATABASE_FIRST.forms
             this.DialogResult = DialogResult.Cancel;
             return;
         }
+
+        public void LoadEdit(string t)
+        {
+            txtTitle.Text = t;
+        }
     }
 }

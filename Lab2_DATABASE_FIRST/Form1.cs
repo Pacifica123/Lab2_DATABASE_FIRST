@@ -1,4 +1,5 @@
 using Lab2_DATABASE_FIRST.forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Lab2_DATABASE_FIRST
 {
@@ -67,7 +68,8 @@ namespace Lab2_DATABASE_FIRST
                            s.Title,
                            p.Titleplaylist
                        };
-            
+            mainDGV.DataSource = link.AsEnumerable().ToList();
+
             mainDGV.Columns[0].Visible = false;
 
             //опять же когда дойдем до join
@@ -214,8 +216,8 @@ namespace Lab2_DATABASE_FIRST
         #endregion
         private void DEL_BUT_Click(object sender, EventArgs e)
         {
-            if(SelectTable_CMBX.SelectedValue == null)
-            { MessageBox.Show("Таблицы не выбрана!"); return; }
+            //if(SelectTable_CMBX.SelectedValue == null)
+            //{ MessageBox.Show("Таблицы не выбрана!"); return; }
             int selectedid = Convert.ToInt32(mainDGV.CurrentRow.Cells[0].Value);
             switch (SelectTable_CMBX.SelectedIndex)
             {
@@ -230,6 +232,89 @@ namespace Lab2_DATABASE_FIRST
                     break;
                 case 3:
                     DelLink(selectedid);
+                    break;
+                default:
+                    MessageBox.Show("Произошло что-то странное");
+                    break;
+            }
+        }
+        #region ФУНКЦИИ EDIT
+        private void EditUser(int id)
+        {
+            User user = db.Users.FirstOrDefault(u => u.Id == id);
+            FormUsers formUsers = new FormUsers();
+            formUsers.LoadEdit(user.Login, user.Datereg);
+            if (formUsers.ShowDialog() == DialogResult.Cancel)
+            {
+                MessageBox.Show("Данные НЕ изменились!");
+                return;
+            } 
+
+            user.Login = formUsers.login;
+            user.Datereg = formUsers.dateReg;
+            db.SaveChanges();
+            ShowUsers();
+        }
+        private void EditSong(int id)
+        {
+            Song song = db.Songs.FirstOrDefault(u => u.Id == id);
+            FormSongs formSongs = new FormSongs();
+            formSongs.LoadEdit(song.Title);
+            if (formSongs.ShowDialog() == DialogResult.Cancel)
+            {
+                MessageBox.Show("Данные НЕ изменились!");
+                return;
+            }
+            song.Title = formSongs.title;
+            db.SaveChanges();
+            ShowSongs();
+        }
+        private void EditPlaylist(int id)
+        {
+            Playlist playlist = db.Playlists.FirstOrDefault(u => u.Id == id);
+            FormPlaylists formPlaylists = new FormPlaylists();
+            formPlaylists.LoadEdit(playlist.Titleplaylist, playlist.Userid);
+            if (formPlaylists.ShowDialog() == DialogResult.Cancel)
+            {
+                MessageBox.Show("Данные НЕ изменились!");
+                return;
+            }
+            playlist.Titleplaylist = formPlaylists.title;
+            db.SaveChanges();
+            ShowPlaylists();
+        }
+        private void EditLink(int id)
+        {
+            Playlistsong oldlink = db.Playlistsongs.FirstOrDefault(u => u.Id == id);
+            FormPlaylistSongLink formLink = new FormPlaylistSongLink();
+            formLink.LoadEdit(oldlink.Playlistid, oldlink.Songid);
+            if (formLink.ShowDialog() == DialogResult.Cancel)
+            {
+                MessageBox.Show("Данные НЕ изменились!");
+                return;
+            }
+            oldlink.Playlistid = formLink.id_playlist;
+            oldlink.Songid = formLink.id_song;
+            db.SaveChanges();
+            ShowPlaylists();
+        }
+        #endregion
+        private void EDIT_BUT_Click(object sender, EventArgs e)
+        {
+            int selectedid = Convert.ToInt32(mainDGV.CurrentRow.Cells[0].Value);
+            switch (SelectTable_CMBX.SelectedIndex)
+            {
+                case 0:
+                    EditUser(selectedid);
+                    break;
+                case 1:
+                    EditSong(selectedid);
+                    break;
+                case 2:
+                    EditPlaylist(selectedid);
+                    break;
+                case 3:
+                    EditLink(selectedid);
                     break;
                 default:
                     MessageBox.Show("Произошло что-то странное");

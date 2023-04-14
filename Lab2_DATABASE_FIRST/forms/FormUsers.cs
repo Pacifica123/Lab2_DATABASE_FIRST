@@ -32,5 +32,11 @@ namespace Lab2_DATABASE_FIRST.forms
             this.DialogResult = DialogResult.Cancel;
             return;
         }
+
+        public void LoadEdit(string inlog, DateOnly date)
+        {
+            txtLogin.Text = inlog;
+            dateTimePicker1.Value = date.ToDateTime(TimeOnly.MinValue);
+        }
     }
 }
