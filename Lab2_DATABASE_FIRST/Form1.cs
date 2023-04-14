@@ -29,13 +29,23 @@ namespace Lab2_DATABASE_FIRST
         private void ShowPlaylists()
         {
 
-            mainDGV.DataSource = db.Playlists.ToList();
+            //mainDGV.DataSource = db.Playlists.ToList();
+            var playlist = from p in db.Playlists
+                           join u in db.Users on p.Userid equals u.Id
+                           select new
+                           {
+                               p.Id,
+                               p.Titleplaylist,
+                               u.Login
+                           };
+            mainDGV.DataSource = playlist.AsEnumerable().ToList();
             mainDGV.Columns[0].Visible = false;
             mainDGV.Columns[1].HeaderText = "Название плейлиста";
-            mainDGV.Columns[2].Visible = false;
-            mainDGV.Columns[3].Visible = false;
-            mainDGV.Columns[4].Visible = false;
-            // mainDGV.Columns[5].HeaderText = "Владелец/Создатель"; //когда дойдем до join
+            //mainDGV.Columns[2].Visible = false;
+            //mainDGV.Columns[3].Visible = false;
+            //mainDGV.Columns[4].Visible = false;
+            mainDGV.Columns[2].HeaderText = "Владелец/Создатель"; //когда дойдем до join
+
         }
         private void ShowSongs()
         {
@@ -46,16 +56,27 @@ namespace Lab2_DATABASE_FIRST
         }
         private void ShowPlaylistSongs()
         {
-            mainDGV.DataSource = db.Playlistsongs.ToList();
+            //mainDGV.DataSource = db.Playlistsongs.ToList();
+
+            var link = from l in db.Playlistsongs
+                       join s in db.Songs on l.Songid equals s.Id
+                       join p in db.Playlists on l.Playlistid equals p.Id
+                       select new
+                       {
+                           l.Id,
+                           s.Title,
+                           p.Titleplaylist
+                       };
+            
             mainDGV.Columns[0].Visible = false;
 
             //опять же когда дойдем до join
             //mainDGV.Columns[1].Visible = false;
             //mainDGV.Columns[2].Visible = false;
-            mainDGV.Columns[3].Visible = false;
-            mainDGV.Columns[4].Visible = false;
-            //mainDGV.Columns[5].HeaderText = "Песня";
-            //mainDGV.Columns[6].HeaderText = "Плейлист песни";
+           // mainDGV.Columns[3].Visible = false;
+           // mainDGV.Columns[4].Visible = false;
+            mainDGV.Columns[1].HeaderText = "Песня";
+            mainDGV.Columns[2].HeaderText = "Плейлист песни";
         }
         #endregion
         private void SelectTable_CMBX_SelectedIndexChanged(object sender, EventArgs e)
