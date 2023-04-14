@@ -129,6 +129,7 @@
             this.DEL_BUT.TabIndex = 4;
             this.DEL_BUT.Text = "УДАЛИТЬ";
             this.DEL_BUT.UseVisualStyleBackColor = false;
+            this.DEL_BUT.Click += new System.EventHandler(this.DEL_BUT_Click);
             // 
             // label2
             // 

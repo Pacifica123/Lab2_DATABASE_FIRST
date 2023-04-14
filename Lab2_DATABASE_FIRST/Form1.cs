@@ -178,5 +178,63 @@ namespace Lab2_DATABASE_FIRST
                     return;
             }
         }
+        #region ФУНКЦИИ DEL
+        private void DelUser(int id)
+        {
+            User user = db.Users.FirstOrDefault(u => u.Id == id);
+            db.Users.Remove(user);
+            MessageBox.Show("Запись удалена!");
+            db.SaveChanges();
+            ShowUsers();
+        }
+        private void DelSong(int id)
+        {
+            Song song = db.Songs.FirstOrDefault(s => s.Id == id);
+            db.Songs.Remove(song);
+            MessageBox.Show("Запись удалена!");
+            db.SaveChanges();
+            ShowSongs();
+        }
+        private void DelPlaylist(int id)
+        {
+            Playlist playlist = db.Playlists.FirstOrDefault(p => p.Id == id);
+            db.Playlists.Remove(playlist);
+            MessageBox.Show("Запись удалена!");
+            db.SaveChanges();
+            ShowPlaylists();
+        }
+        private void DelLink(int id)
+        {
+            Playlistsong link = db.Playlistsongs.FirstOrDefault(l => l.Id == id);
+            db.Playlistsongs.Remove(link);
+            MessageBox.Show("Запись удалена!");
+            db.SaveChanges();
+            ShowPlaylistSongs();
+        }
+        #endregion
+        private void DEL_BUT_Click(object sender, EventArgs e)
+        {
+            if(SelectTable_CMBX.SelectedValue == null)
+            { MessageBox.Show("Таблицы не выбрана!"); return; }
+            int selectedid = Convert.ToInt32(mainDGV.CurrentRow.Cells[0].Value);
+            switch (SelectTable_CMBX.SelectedIndex)
+            {
+                case 0:
+                    DelUser(selectedid);
+                    break;
+                case 1:
+                    DelSong(selectedid);
+                    break;
+                case 2:
+                    DelPlaylist(selectedid);
+                    break;
+                case 3:
+                    DelLink(selectedid);
+                    break;
+                default:
+                    MessageBox.Show("Произошло что-то странное");
+                    break;
+            }
+        }
     }
 }
