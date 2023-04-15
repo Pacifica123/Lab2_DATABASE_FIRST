@@ -44,7 +44,7 @@ namespace Lab2_DATABASE_FIRST.forms
         public void LoadEdit(int playlist_id, int song_id)
         {
             PlaylistId_CMBX.SelectedValue = playlist_id;
-            PlaylistId_CMBX.SelectedValue = song_id;
+            SongId_CMBX.SelectedValue = song_id;
         }
     }
 }

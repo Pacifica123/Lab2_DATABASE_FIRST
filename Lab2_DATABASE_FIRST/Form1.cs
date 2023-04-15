@@ -296,7 +296,7 @@ namespace Lab2_DATABASE_FIRST
             oldlink.Playlistid = formLink.id_playlist;
             oldlink.Songid = formLink.id_song;
             db.SaveChanges();
-            ShowPlaylists();
+            ShowPlaylistSongs();
         }
         #endregion
         private void EDIT_BUT_Click(object sender, EventArgs e)
